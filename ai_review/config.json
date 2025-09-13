@@ -1,0 +1,18 @@
+{
+  "gitlab": {
+    "domain": "",
+    "token": "",
+    "project_id": ""
+  },
+  "files": {
+    "mr_request": "mr_request.md",
+    "mr_diff": "mr_diff.md",
+    "review_output": "output_review.md",
+    "review_rules": "review_rule.md"
+  },
+  "settings": {
+    "auto_clear_output": true,
+    "request_timeout": 30,
+    "encoding": "utf-8"
+  }
+}
