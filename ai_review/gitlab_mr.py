@@ -11,16 +11,29 @@ def load_config():
         print(f"❌ 找不到配置檔案：{config_path}")
         print("請建立 config.json 檔案並設定相關參數")
         exit(1)
-    
+
     try:
         with open(config_path, "r", encoding="utf-8") as f:
-            return json.load(f)
+            config = json.load(f)
     except json.JSONDecodeError as e:
         print(f"❌ 配置檔案格式錯誤：{e}")
         exit(1)
     except Exception as e:
         print(f"❌ 讀取配置檔案失敗：{e}")
         exit(1)
+
+    # 驗證必填欄位
+    gitlab_config = config.get("gitlab") if isinstance(config, dict) else None
+    if not isinstance(gitlab_config, dict):
+        print("❌ 配置檔案缺少 gitlab 設定")
+        exit(1)
+
+    for field in ("domain", "token", "project_id"):
+        if not gitlab_config.get(field):
+            print(f"❌ 配置檔案中的 `gitlab.{field}` 欄位缺失或為空")
+            exit(1)
+
+    return config
 
 # === 📁 初始化配置 ===
 config = load_config()
